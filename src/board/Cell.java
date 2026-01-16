@@ -49,7 +49,7 @@ public class Cell {
     public String toString() {
         if (!isRevealed) {
             if (isFlagged) {
-                return "[" + ConsoleColors.RED + "F" + ConsoleColors.RESET + "]";
+                return "[" + ConsoleColors.YELLOW + "F" + ConsoleColors.RESET + "]";
             }
             return "[_]";
         } else {
