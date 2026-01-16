@@ -49,17 +49,21 @@ public class Cell {
     public String toString() {
         if (!isRevealed) {
             if (isFlagged) {
-                return "[F]";
+                return "[" + ConsoleColors.RED + "F" + ConsoleColors.RESET + "]";
             }
             return "[_]";
         } else {
             if (isMine) {
-                return "[X]";
+                return "[" + ConsoleColors.RED_BOLD + "X" + ConsoleColors.RESET +  "]";
             }
-            if (adjacentMines == 0) {
-                return "[ ]";
+            switch (adjacentMines) {
+                case 1: return "[" + ConsoleColors.BLUE + adjacentMines + ConsoleColors.RESET + "]";
+                case 2: return "[" + ConsoleColors.GREEN + adjacentMines + ConsoleColors.RESET + "]";
+                case 3: return "[" + ConsoleColors.RED + adjacentMines + ConsoleColors.RESET + "]";
+                case 4: return "[" + ConsoleColors.PURPLE + adjacentMines + ConsoleColors.RESET + "]";
+                case 0: return ConsoleColors.GRAY + "[ ]" + ConsoleColors.RESET;
+                default: return ConsoleColors.CYAN + "[" + adjacentMines + "]" + ConsoleColors.RESET;
             }
-            return "[" + adjacentMines + "]";
         }
     }
 }
