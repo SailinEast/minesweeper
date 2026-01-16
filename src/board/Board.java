@@ -109,6 +109,7 @@ public class Board {
         } else {
             floodFill(row, col);
             if (totalSafeCells == revealedCells) {
+                revealGrid();
                 return GameState.WON;
             }
             return GameState.PLAYING;
@@ -144,8 +145,8 @@ public class Board {
         StringBuilder sb = new StringBuilder();
         sb.append("   | ");
         for (int k = 1; k <= size; k++) {
-            String kStr = String.valueOf(k);
-            sb.append(k).append(" ".repeat(3 - kStr.length()));
+            String k_str = String.valueOf(k);
+            sb.append(k).append(" ".repeat(3 - k_str.length()));
         }
         sb.append("\n");
         for (int k = 0; k < size * 3 + 5; k++) {
