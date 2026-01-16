@@ -2,4 +2,4 @@
 A simple CLI minesweeper game built using Java
 
 ## Usage
-Just run Game.java file
+Download and run executable file in the releases
