@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Game {
     private Scanner scanner;
     private Board board;
+    private boolean firstInput = true;
 
     public Game(int size, int mines) {
         board = new Board(size, mines);
@@ -64,6 +65,12 @@ public class Game {
             try {
                 int row = Integer.parseInt(parts[0]) - 1;
                 int col = Integer.parseInt(parts[1]) - 1;
+
+                if (firstInput) {
+                    board.placeMines(row, col);
+                    board.calculateAdjacent();
+                    firstInput = false;
+                }
 
                 if (parts.length == 3 && parts[2].equalsIgnoreCase("f")) {
                     board.switchFlag(row, col);

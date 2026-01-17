@@ -31,8 +31,6 @@ public class Board {
                 grid[i][j] = new Cell();
             }
         }
-        placeMines();
-        calculateAdjacent();
     }
 
     public int getFlagCount() {
@@ -53,13 +51,19 @@ public class Board {
         }
     }
 
-    public void placeMines() {
+    public void placeMines(int row, int col) {
         int placedMines = 0;
 
         while (placedMines < mineCount) {
-            int randX = random.nextInt(0, size);
-            int randY = random.nextInt(0, size);
-            Cell cell = grid[randX][randY];
+            int randRow = random.nextInt(0, size);
+            int randCol = random.nextInt(0, size);
+
+            if ((row - 1 <= randRow && randRow <= row + 1)
+                    && (col - 1 <= randCol && randCol <= col + 1)) {
+                continue;
+            }
+
+            Cell cell = grid[randRow][randCol];
 
             if (!cell.isMine()) {
                 cell.setMine(true);
