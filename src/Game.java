@@ -3,9 +3,7 @@ import board.ConsoleColors;
 import board.GameState;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class Game {
     private static final Scanner scanner = new Scanner(System.in);
@@ -113,8 +111,8 @@ public class Game {
                 int[] input = get_input();
                 int size = input[0];
                 int mines = input[1];
-                if (size * size <= mines || mines < 0 || size < 0) {
-                    System.out.println("Incorrect values. Type again");
+                if (size * size <= mines || mines < 0 || size < 0 || size >= 1000) {
+                    System.out.println("Incorrect value(s). Type again");
                     continue;
                 }
 

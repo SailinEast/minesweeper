@@ -1,6 +1,8 @@
 package board;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 public class Board {
@@ -127,18 +129,31 @@ public class Board {
     }
 
     private void floodFill(int row, int col) {
-        if (row < 0 || row >= size || col < 0 || col >= size) return;
-        Cell cell = grid[row][col];
-        if (cell.isRevealed()) return;
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[] {row, col});
 
-        cell.setRevealed(true);
-        revealedCells++;
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int x = current[0];
+            int y = current[1];
 
-        if (cell.getAdjacentMines() > 0) return;
+            if (x < 0 || x >= size || y < 0 || y >= size) continue;
 
-        for (int i = row - 1; i <= row + 1; i++) {
-            for (int j = col - 1; j <= col + 1; j++) {
-                floodFill(i, j);
+            Cell cell = grid[x][y];
+
+            if (cell.isRevealed()) continue;
+
+            cell.setRevealed(true);
+            revealedCells++;
+
+            if (cell.getAdjacentMines() > 0) continue;
+
+            for (int i = x - 1; i <= x + 1; i++) {
+                for (int j = y - 1; j <= y + 1; j++) {
+                    if (i >= 0 && i < size && j >= 0 && j < size && !grid[i][j].isRevealed()) {
+                        queue.add(new int[] {i, j});
+                    }
+                }
             }
         }
     }
