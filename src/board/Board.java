@@ -31,8 +31,6 @@ public class Board {
                 grid[i][j] = new Cell();
             }
         }
-        placeMines();
-        calculateAdjacent();
     }
 
     public int getFlagCount() {
@@ -53,13 +51,19 @@ public class Board {
         }
     }
 
-    public void placeMines() {
+    public void placeMines(int row, int col) {
         int placedMines = 0;
 
         while (placedMines < mineCount) {
-            int randX = random.nextInt(0, size);
-            int randY = random.nextInt(0, size);
-            Cell cell = grid[randX][randY];
+            int randRow = random.nextInt(0, size);
+            int randCol = random.nextInt(0, size);
+
+            if ((row - 1 <= randRow && randRow <= row + 1)
+                    && (col - 1 <= randCol && randCol <= col + 1)) {
+                continue;
+            }
+
+            Cell cell = grid[randRow][randCol];
 
             if (!cell.isMine()) {
                 cell.setMine(true);
@@ -109,6 +113,7 @@ public class Board {
         } else {
             floodFill(row, col);
             if (totalSafeCells == revealedCells) {
+                revealGrid();
                 return GameState.WON;
             }
             return GameState.PLAYING;
@@ -125,7 +130,6 @@ public class Board {
         if (row < 0 || row >= size || col < 0 || col >= size) return;
         Cell cell = grid[row][col];
         if (cell.isRevealed()) return;
-
 
         cell.setRevealed(true);
         revealedCells++;
@@ -144,8 +148,8 @@ public class Board {
         StringBuilder sb = new StringBuilder();
         sb.append("   | ");
         for (int k = 1; k <= size; k++) {
-            String kStr = String.valueOf(k);
-            sb.append(k).append(" ".repeat(3 - kStr.length()));
+            String k_str = String.valueOf(k);
+            sb.append(k).append(" ".repeat(3 - k_str.length()));
         }
         sb.append("\n");
         for (int k = 0; k < size * 3 + 5; k++) {
